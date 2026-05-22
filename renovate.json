@@ -7,11 +7,11 @@
   "packageRules": [
     {
       "matchManagers": ["gomod"],
+      "postUpdateOptions": ["gomodTidy"],
       "groupName": "Go dependencies"
     },
     {
       "matchManagers": ["github-actions"],
-      "groupName": "GitHub Actions",
       "pinDigests": true
     }
   ]
