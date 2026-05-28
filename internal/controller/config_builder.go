@@ -325,6 +325,9 @@ func collectSecretEnvVars(spec *supersetv1alpha1.SupersetSpec, parentName string
 			port = *spec.Valkey.Port
 		}
 		envs = append(envs, corev1.EnvVar{Name: naming.EnvValkeyPort, Value: fmt.Sprintf("%d", port)})
+		if spec.Valkey.Username != nil {
+			envs = append(envs, corev1.EnvVar{Name: naming.EnvValkeyUser, Value: *spec.Valkey.Username})
+		}
 		if isDev && spec.Valkey.Password != nil {
 			envs = append(envs, corev1.EnvVar{Name: naming.EnvValkeyPass, Value: *spec.Valkey.Password})
 		} else if spec.Valkey.PasswordFrom != nil {

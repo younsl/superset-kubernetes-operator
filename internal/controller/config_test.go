@@ -577,6 +577,16 @@ func TestCollectSecretEnvVars_Valkey(t *testing.T) {
 		}
 	})
 
+	t.Run("username", func(t *testing.T) {
+		spec := &supersetv1alpha1.SupersetSpec{
+			Valkey: &supersetv1alpha1.ValkeySpec{Host: "valkey", Username: common.Ptr("acl-user")},
+		}
+		envMap := envSliceToMap(collectSecretEnvVars(spec, "test"))
+		if envMap["SUPERSET_OPERATOR__VALKEY_USER"] != "acl-user" {
+			t.Errorf("expected username, got %q", envMap["SUPERSET_OPERATOR__VALKEY_USER"])
+		}
+	})
+
 	t.Run("dev mode password", func(t *testing.T) {
 		spec := &supersetv1alpha1.SupersetSpec{
 			Environment: common.Ptr("Development"),
