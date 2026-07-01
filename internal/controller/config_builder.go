@@ -57,7 +57,7 @@ func buildInitCommand(init *supersetv1alpha1.InitTaskSpec) []string {
 		script += " && superset load-examples"
 	}
 
-	return []string{"/bin/sh", "-c", script}
+	return []string{bootstrapShell, "-c", script}
 }
 
 func convertTaskComponent(lifecycle *supersetv1alpha1.LifecycleSpec, command []string) *resolution.ComponentInput {

@@ -66,7 +66,7 @@ func reconcileHPA(
 		hpa.Spec = autoscalingv2.HorizontalPodAutoscalerSpec{
 			ScaleTargetRef: autoscalingv2.CrossVersionObjectReference{
 				APIVersion: "apps/v1",
-				Kind:       "Deployment",
+				Kind:       kindDeployment,
 				Name:       deploymentName,
 			},
 			MinReplicas: autoscaling.MinReplicas,

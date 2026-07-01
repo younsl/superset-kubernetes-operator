@@ -121,7 +121,7 @@ func ComponentResourceDefs() []ComponentResourceDef {
 				componentName: string(common.ComponentCeleryFlower),
 				deployConfig: DeploymentConfig{
 					ContainerName:  common.Container,
-					DefaultCommand: []string{"/bin/sh", "-c", "exec celery --app=superset.tasks.celery_app:app flower --url_prefix=\"$SUPERSET_OPERATOR__FLOWER_URL_PREFIX\""},
+					DefaultCommand: []string{bootstrapShell, "-c", "exec celery --app=superset.tasks.celery_app:app flower --url_prefix=\"$SUPERSET_OPERATOR__FLOWER_URL_PREFIX\""},
 					DefaultPorts: []corev1.ContainerPort{
 						{Name: common.PortNameHTTP, ContainerPort: common.PortCeleryFlower, Protocol: corev1.ProtocolTCP},
 					},

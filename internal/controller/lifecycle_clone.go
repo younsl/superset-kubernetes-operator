@@ -68,9 +68,9 @@ func (r *SupersetReconciler) buildCloneCommand(superset *supersetv1alpha1.Supers
 	}
 
 	if srcType == dbTypeMySQL {
-		return []string{"/bin/sh", "-c", buildMySQLCloneScript(clone)}
+		return []string{bootstrapShell, "-c", buildMySQLCloneScript(clone)}
 	}
-	return []string{"/bin/sh", "-c", buildPostgresCloneScript(clone)}
+	return []string{bootstrapShell, "-c", buildPostgresCloneScript(clone)}
 }
 
 func buildPostgresCloneScript(clone *supersetv1alpha1.CloneTaskSpec) string {

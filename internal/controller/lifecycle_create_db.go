@@ -111,7 +111,7 @@ func buildCreateDatabaseInitContainer(superset *supersetv1alpha1.Superset, lifec
 		Name:            createDatabaseContainerName,
 		Image:           fmt.Sprintf("%s:%s", image.Repository, image.Tag),
 		ImagePullPolicy: image.PullPolicy,
-		Command:         []string{"/bin/sh", "-c", script},
+		Command:         []string{bootstrapShell, "-c", script},
 		Env:             createDatabaseEnvVars(superset.Spec.Metastore),
 	}
 	var containerSC *corev1.SecurityContext

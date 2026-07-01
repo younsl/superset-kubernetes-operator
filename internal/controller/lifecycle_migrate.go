@@ -88,5 +88,5 @@ func defaultMigrateCommand(superset *supersetv1alpha1.Superset) []string {
 	if superset.Spec.Lifecycle != nil && superset.Spec.Lifecycle.Migrate != nil && len(superset.Spec.Lifecycle.Migrate.Command) > 0 {
 		return superset.Spec.Lifecycle.Migrate.Command
 	}
-	return withBootstrapScript([]string{"/bin/sh", "-c", "superset db upgrade"}, effectiveLifecycleBootstrapScript(&superset.Spec))
+	return withBootstrapScript([]string{bootstrapShell, "-c", "superset db upgrade"}, effectiveLifecycleBootstrapScript(&superset.Spec))
 }

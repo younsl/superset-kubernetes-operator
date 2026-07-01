@@ -156,7 +156,8 @@ func buildDeploymentSpec(
 	}
 
 	// Build containers list: main + sidecars.
-	containers := []corev1.Container{mainContainer}
+	containers := make([]corev1.Container, 0, 1+len(pt.Sidecars))
+	containers = append(containers, mainContainer)
 	containers = append(containers, pt.Sidecars...)
 
 	// Build pod labels and annotations.

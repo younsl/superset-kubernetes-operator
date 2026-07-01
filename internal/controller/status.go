@@ -44,6 +44,10 @@ const (
 
 	componentResourceStatusPresent = "Present"
 	componentResourceStatusMissing = "Missing"
+
+	// kindDeployment is the Kubernetes Kind for component workloads, used both
+	// as HPA scaleTargetRef and in reported component resource status.
+	kindDeployment = "Deployment"
 )
 
 // patchStatusIfChanged issues a status MergeFrom patch iff the two status
@@ -227,7 +231,7 @@ func componentDeploymentMissing(status *supersetv1alpha1.ComponentRefStatus) boo
 		return false
 	}
 	for _, resource := range status.Resources {
-		if resource.Kind == "Deployment" && resource.Status == componentResourceStatusMissing {
+		if resource.Kind == kindDeployment && resource.Status == componentResourceStatusMissing {
 			return true
 		}
 	}
@@ -258,7 +262,7 @@ func drainedComponentStatus(superset *supersetv1alpha1.Superset, desc *component
 	desired := desiredReplicasForStatus(superset, desc, accessor)
 	resources := []supersetv1alpha1.ComponentResourceStatus{
 		{
-			Kind:   "Deployment",
+			Kind:   kindDeployment,
 			Name:   resourceBaseName,
 			Status: componentResourceStatusMissing,
 		},
@@ -284,7 +288,7 @@ func (r *SupersetReconciler) getComponentStatus(ctx context.Context, superset *s
 			log := logf.FromContext(ctx)
 			log.Error(err, "Failed to read component Deployment for status", "component", desc.componentType, "name", resourceBaseName)
 		}
-		resources = append(resources, componentResourceStatus("Deployment", resourceBaseName, false))
+		resources = append(resources, componentResourceStatus(kindDeployment, resourceBaseName, false))
 		resources = append(resources, r.expectedComponentResources(ctx, superset, desc, accessor, cfg, resourceBaseName)...)
 		return &supersetv1alpha1.ComponentRefStatus{
 			Phase:     "Pending",
@@ -293,7 +297,7 @@ func (r *SupersetReconciler) getComponentStatus(ctx context.Context, superset *s
 			Message:   fmt.Sprintf("Deployment %s not found", resourceBaseName),
 		}
 	}
-	resources = append(resources, componentResourceStatus("Deployment", resourceBaseName, true))
+	resources = append(resources, componentResourceStatus(kindDeployment, resourceBaseName, true))
 	resources = append(resources, r.expectedComponentResources(ctx, superset, desc, accessor, cfg, resourceBaseName)...)
 
 	if deploy.Spec.Replicas != nil {

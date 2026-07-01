@@ -44,6 +44,10 @@ const (
 
 	maintenanceContainerName = "maintenance-page"
 
+	// maintenanceConfigVolumeName is the name of the volume (and matching mounts)
+	// that projects the maintenance page's nginx config and HTML into the pod.
+	maintenanceConfigVolumeName = "maintenance-config"
+
 	// maintenanceNonRootUID is the default UID for the maintenance nginx
 	// container. The rendered nginx.conf routes the pid file and temp paths to
 	// /tmp, so nginx runs correctly as any non-root UID regardless of the
@@ -361,7 +365,7 @@ func buildMaintenanceFlatSpec(parentName string, spec *supersetv1alpha1.Maintena
 		cmName := maintenanceConfigMapName(parentName)
 		volumes := []corev1.Volume{
 			{
-				Name: "maintenance-config",
+				Name: maintenanceConfigVolumeName,
 				VolumeSource: corev1.VolumeSource{
 					ConfigMap: &corev1.ConfigMapVolumeSource{
 						LocalObjectReference: corev1.LocalObjectReference{Name: cmName},
@@ -370,9 +374,9 @@ func buildMaintenanceFlatSpec(parentName string, spec *supersetv1alpha1.Maintena
 			},
 		}
 		volumeMounts := []corev1.VolumeMount{
-			{Name: "maintenance-config", MountPath: "/etc/nginx/nginx.conf", SubPath: "nginx.conf"},
-			{Name: "maintenance-config", MountPath: "/etc/nginx/conf.d/default.conf", SubPath: "default.conf"},
-			{Name: "maintenance-config", MountPath: "/usr/share/nginx/html/index.html", SubPath: "index.html"},
+			{Name: maintenanceConfigVolumeName, MountPath: "/etc/nginx/nginx.conf", SubPath: "nginx.conf"},
+			{Name: maintenanceConfigVolumeName, MountPath: "/etc/nginx/conf.d/default.conf", SubPath: "default.conf"},
+			{Name: maintenanceConfigVolumeName, MountPath: "/usr/share/nginx/html/index.html", SubPath: "index.html"},
 		}
 
 		if flat.PodTemplate == nil {

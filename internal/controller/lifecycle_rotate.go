@@ -59,5 +59,5 @@ func defaultRotateCommand(superset *supersetv1alpha1.Superset) []string {
 	if superset.Spec.Lifecycle != nil && superset.Spec.Lifecycle.Rotate != nil && len(superset.Spec.Lifecycle.Rotate.Command) > 0 {
 		return superset.Spec.Lifecycle.Rotate.Command
 	}
-	return withBootstrapScript([]string{"/bin/sh", "-c", "superset re-encrypt-secrets"}, effectiveLifecycleBootstrapScript(&superset.Spec))
+	return withBootstrapScript([]string{bootstrapShell, "-c", "superset re-encrypt-secrets"}, effectiveLifecycleBootstrapScript(&superset.Spec))
 }

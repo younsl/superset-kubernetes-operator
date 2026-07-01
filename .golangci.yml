@@ -38,6 +38,10 @@ linters:
     - unparam
     - unused
   settings:
+    goconst:
+      # Test files legitimately repeat literals to assert on observable output;
+      # don't count those occurrences toward the constant-extraction threshold.
+      ignore-tests: true
     revive:
       rules:
         - name: comment-spacings
@@ -54,7 +58,6 @@ linters:
           - lll
         path: internal/*
       - linters:
-          - goconst
           - gocyclo
           - gosec
         path: _test\.go
