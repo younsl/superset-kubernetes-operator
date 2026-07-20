@@ -127,3 +127,27 @@ podLabels: {}
 watch:
   scope: cluster
   namespaces: []
+
+# extraObjects renders additional Kubernetes manifests alongside the chart's
+# own resources. Each list entry is either a YAML object or a string; both
+# are passed through Helm's tpl function, so template expressions such as
+# {{ .Release.Namespace }} or {{ include "superset-operator.fullname" . }}
+# are resolved. Use strings when the manifest itself must contain literal
+# template syntax that only renders at install time.
+#
+# Example:
+#   extraObjects:
+#     - apiVersion: v1
+#       kind: ConfigMap
+#       metadata:
+#         name: '{{ include "superset-operator.fullname" . }}-extra'
+#       data:
+#         namespace: '{{ .Release.Namespace }}'
+#     - |
+#       apiVersion: v1
+#       kind: Secret
+#       metadata:
+#         name: {{ include "superset-operator.fullname" . }}-extra-secret
+#       stringData:
+#         key: value
+extraObjects: []
