@@ -25,6 +25,7 @@ This page tracks notable changes in Apache Superset Kubernetes Operator releases
 
 ### Added
 
+- **Helm `topologySpreadConstraints`.** The Helm chart now exposes a `topologySpreadConstraints` value that sets `spec.template.spec.topologySpreadConstraints` on the operator Deployment, letting operators distribute manager pods across failure domains such as nodes and zones ([#213](https://github.com/apache/superset-kubernetes-operator/pull/213), [@younsl](https://github.com/younsl)).
 - **Helm `revisionHistoryLimit`.** The Helm chart now exposes a `revisionHistoryLimit` value that allows setting `spec.revisionHistoryLimit` on the operator Deployment, capping the number of old ReplicaSets retained for rollback ([@younsl](https://github.com/younsl)).
 - **Helm extra manifests.** The Helm chart now supports `extraManifests` for rendering trusted, release-scoped Kubernetes manifests with Helm `tpl`. Use it for companion resources owned by the operator release, not shared cluster infrastructure such as Gateway API controllers, CRDs, or shared Gateways ([#196](https://github.com/apache/superset-kubernetes-operator/pull/196), [@younsl](https://github.com/younsl)).
 - **Helm resize policy.** The Helm chart now supports `resizePolicy` on the manager container, controlling whether an in-place pod resize (InPlacePodVerticalScaling) restarts the container ([#200](https://github.com/apache/superset-kubernetes-operator/pull/200), [@younsl](https://github.com/younsl)).
