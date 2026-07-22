@@ -22,7 +22,9 @@ metadata:
     {{- include "superset-operator.labels" . | nindent 4 }}
 spec:
   replicas: {{ .Values.replicas }}
+  {{- if not (kindIs "invalid" .Values.revisionHistoryLimit) }}
   revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
+  {{- end }}
   selector:
     matchLabels:
       {{- include "superset-operator.selectorLabels" . | nindent 6 }}

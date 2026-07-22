@@ -253,6 +253,7 @@ When adding new source files (`.go`, `.yaml`, `.sh`, `Dockerfile`, etc.), includ
 - **Don't hardcode commands/ports** — use `DeploymentConfig` defaults
 - **Don't duplicate controller logic** — use `component_reconciler.go` helpers
 - **Don't copy derived facts between docs** — values defined in code or in one canonical doc (e.g. the per-component routing paths in [`networking-and-monitoring.md`](../user-guide/networking-and-monitoring.md)) should be stated once and cross-linked from elsewhere, not re-listed on other pages where they silently go stale. Same spirit as the Automation Principle: one source of truth.
+- **Don't echo upstream defaults in Helm values or docs** — when a Helm value passes through to a Kubernetes field, leave it unset (`~`) so the platform default applies, and don't restate the current default value in comments, `values.yaml`, or release notes. Defaults can change upstream, and repeating them creates a second source of truth that silently goes stale.
 - **Don't add fields without doc comments** — they become CRD descriptions
 - **Don't use `bool` with `omitempty`** — use `*bool` to distinguish false from unset
 - **Don't write integration tests for unit-testable logic** — use fake client
