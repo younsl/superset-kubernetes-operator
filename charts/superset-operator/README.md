@@ -73,6 +73,7 @@ Full documentation is available at <https://apache.github.io/superset-kubernetes
 | replicas | int | `1` | Number of operator manager replicas. |
 | resizePolicy | list | `[]` | Container resize policy for in-place pod resizes (InPlacePodVerticalScaling). Does not affect how Helm-driven `resources` updates behave — those still roll the Deployment. See [corev1.ContainerResizePolicy](https://pkg.go.dev/k8s.io/api/core/v1#ContainerResizePolicy). |
 | resources | object | `{"limits":{"cpu":"500m","memory":"128Mi"},"requests":{"cpu":"10m","memory":"64Mi"}}` | Compute resource requests and limits for the manager container. See [corev1.ResourceRequirements](https://pkg.go.dev/k8s.io/api/core/v1#ResourceRequirements). |
+| revisionHistoryLimit | string | `nil` | Number of old ReplicaSets to retain for rollback. Leave unset to use the Kubernetes default. Set to 0 to disable rollback history. |
 | securityContext | object | `{"allowPrivilegeEscalation":false,"capabilities":{"drop":["ALL"]},"readOnlyRootFilesystem":true}` | Container-level security context for the manager container. See [corev1.SecurityContext](https://pkg.go.dev/k8s.io/api/core/v1#SecurityContext). |
 | serviceAccount.annotations | object | `{}` | Annotations to add to the ServiceAccount. |
 | serviceAccount.create | bool | `true` | Whether to create a ServiceAccount for the operator. |

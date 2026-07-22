@@ -9,6 +9,9 @@ image:
 # -- Number of operator manager replicas.
 replicas: 1
 
+# -- Number of old ReplicaSets to retain for rollback. Leave unset to use the Kubernetes default. Set to 0 to disable rollback history.
+revisionHistoryLimit: ~
+
 # -- Compute resource requests and limits for the manager container.
 # See [corev1.ResourceRequirements](https://pkg.go.dev/k8s.io/api/core/v1#ResourceRequirements).
 resources:
