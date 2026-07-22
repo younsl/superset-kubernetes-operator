@@ -23,6 +23,7 @@
       }
     },
     "replicas": { "type": "integer", "minimum": 0 },
+    "revisionHistoryLimit": { "type": "integer", "minimum": 0 },
     "resources": {
       "description": "Compute resource requests and limits for the manager container. See https://pkg.go.dev/k8s.io/api/core/v1#ResourceRequirements",
       "type": "object"
